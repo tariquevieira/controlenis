@@ -2,6 +2,7 @@
 
 namespace Desafio\Data\Repository;
 
+use Desafio\Modules\User\Dto\RepositoryFindModelDto;
 use Desafio\Modules\User\Dto\RepositorySaveModelDto;
 use Desafio\Modules\User\Model\User;
 use PDO;
@@ -18,20 +19,36 @@ class UserRepository implements UserRepositoryInterface
   }
 
  
-  /* public function findCategoryByCode(int $code): array
+  public function find(string $nis): RepositoryFindModelDto
   {
     try {
-      $sqlQuery = 'SELECT * FROM categories where code = :code';
+      $sqlQuery = 'SELECT * FROM users where nis = :nis';
       $statement = $this->connection->prepare($sqlQuery);
-      $statement->bindValue(':code', $code);
+      $statement->bindValue(':nis', $nis);
       $statement->execute();
-      //$category = $this->hydrateCategories($statement);
-      return $category[0];
-    } catch (\PDOException $e) {
-      throw new \PDOException($e->getMessage(), 302);
-    }
-  } */
+      $result = $statement->fetch();
 
+      if (empty($result)) {
+        throw new \Exception('Usuario nao encontrado');
+      }
+      
+      $dto = new RepositoryFindModelDto(
+        success: true,
+        id: (int)$result['id'],
+        name: $result['name'],
+        nis: $result['nis'],
+        message: 'Encontrado'
+      );
+      return $dto;
+    } catch (\Exception $e) {
+      $dto = new RepositoryFindModelDto(
+       false,
+       $e->getMessage(),
+      );
+      return $dto;
+    }
+  } 
+ 
   public function save(User $user): RepositorySaveModelDto
   { 
     try {
@@ -51,7 +68,7 @@ class UserRepository implements UserRepositoryInterface
         );
       }
       return $resultDto;
-    } catch (\PDOException $e) {
+    } catch (\Exception $e) {
       $resultDto = new RepositorySaveModelDto(false,$e->getMessage());
       return $resultDto;
     }

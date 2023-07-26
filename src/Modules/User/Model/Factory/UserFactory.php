@@ -6,12 +6,12 @@ use Desafio\Modules\User\Model\User;
 
 class UserFactory
 {
-  public function create(string $name, string $nis = null): User
+  public function create(string $name, string $nis = null, int $id = null): User
   {
     $nisFactory = new NisFactory();
     $nis = $nisFactory->create($nis);
 
-    $user = new User($name, $nis);
+    $user = new User($name, $nis, $id);
     return $user;
   }
 }

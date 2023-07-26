@@ -8,9 +8,8 @@ header("Access-Control-Allow-Origin: *");
 
 require(__DIR__ . '/../vendor/autoload.php');
 
-
-$urlPath = $_SERVER['REQUEST_URI'];
-
+$urlPath = explode('?', $_SERVER['REQUEST_URI']);
+$urlPath = $urlPath[0];
 
 /** @var array */
 $routes = require(__DIR__ . '/../routes/routes.php');
