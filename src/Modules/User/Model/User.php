@@ -7,7 +7,7 @@ class User implements \JsonSerializable
   public function __construct(
     private string $name,
     private Nis $nis,
-    private ?int $id
+    private ?int $id = null,
     ) {}
 
   /**

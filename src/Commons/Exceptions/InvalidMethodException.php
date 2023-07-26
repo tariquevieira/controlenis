@@ -1,6 +1,6 @@
 <?php
 
-namespace Desafio\Produto\Exceptions;
+namespace Desafio\Commons\Exceptions;
 
 class InvalidMethodException extends \Exception
 {

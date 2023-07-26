@@ -4,15 +4,80 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <style>
+
+    body {
+      background-color: rgba(143, 193, 244, 0.467);
+    }
+
+    .container {
+      width: 50%;
+      height: 300px;
+      background-color: #fff;
+      border: 1px 1px #fff;
+      border-radius: 15px 15px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .form {
+      margin: 0 auto;
+      text-align: center;
+    }
+  </style>
+
+
+  <title>Cadastrar Usuario</title>
 </head>
 <body>
-  <div>
-      <form action="/user/store/" method="post">
+  <div class="container">
+      <form>
           <label for="name">Nome:</label>
           <input type="text" name="name" id="name">
-          <button>Enviar</button>
+          <input name="btn_cadastrar" id="btn_cadastrar" type="button" value="Cadastrar" onclick="cadastraUsuario()">
       </form>
   </div>
+  <script>
+
+   async function cadastraUsuario(codigo) {
+            const data = new FormData();
+
+            const inputName = document.getElementById('name');
+            let name = inputName.value;
+
+            if (0 >= name.trim().length) {
+              alert('Atenção!! Digite um nome');
+              return;
+            }
+            data.append('name', inputName.value);
+            await enviar(data);
+      }
+
+      async function enviar(formData) {
+        let url = "http://localhost:8004/user/store";
+        try {
+            const response = await fetch(url, {
+              method: "POST",
+              body: formData,
+            });
+
+            if (response.status === '201') {
+              throw new Error("Erro: " + response.status);
+            }
+           
+            const resultado = await response.json();
+            let mensagem = ` Usuario cadastrado com sucesso: 
+                      \n Nome: ${resultado.name} 
+                      \n Nis: ${resultado.nis}`;
+            
+            alert(mensagem);
+          } catch (error) {
+            alert(error);
+          }
+      }
+
+  </script>
 </body>
 </html>
