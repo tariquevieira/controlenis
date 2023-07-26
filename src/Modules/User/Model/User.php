@@ -4,6 +4,13 @@ namespace Desafio\Modules\User\Model;
 
 class User implements \JsonSerializable
 {
+  /**
+   * Metodo construtor
+   *
+   * @param string $name
+   * @param Nis $nis
+   * @param integer|null $id
+   */
   public function __construct(
     private string $name,
     private Nis $nis,
@@ -11,7 +18,7 @@ class User implements \JsonSerializable
     ) {}
 
   /**
-   * Undocumented function
+   * Seta name
    *
    * @param string $name
    * @return self
@@ -23,7 +30,7 @@ class User implements \JsonSerializable
   }
 
   /**
-   * Undocumented function
+   * Retorna nome
    *
    * @return string
    */
@@ -33,7 +40,7 @@ class User implements \JsonSerializable
   }
 
   /**
-   * Undocumented function
+   * Seta Nis
    *
    * @param string $nis
    * @return self
@@ -67,6 +74,11 @@ class User implements \JsonSerializable
         return $this;
     }
 
+    /**
+     * Serializador de classe
+     *
+     * @return mixed
+     */
     public function jsonserialize(): mixed
     {
       return [

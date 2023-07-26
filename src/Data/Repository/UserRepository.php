@@ -2,6 +2,7 @@
 
 namespace Desafio\Data\Repository;
 
+use Desafio\Commons\Exceptions\NotFoundUserException;
 use Desafio\Modules\User\Dto\RepositoryFindModelDto;
 use Desafio\Modules\User\Dto\RepositorySaveModelDto;
 use Desafio\Modules\User\Model\User;
@@ -18,7 +19,9 @@ class UserRepository implements UserRepositoryInterface
   {
   }
 
- 
+   /**
+   * @inheritDoc
+   */
   public function find(string $nis): RepositoryFindModelDto
   {
     try {
@@ -29,7 +32,7 @@ class UserRepository implements UserRepositoryInterface
       $result = $statement->fetch();
 
       if (empty($result)) {
-        throw new \Exception('Usuario nao encontrado');
+        throw new NotFoundUserException('Usuario nao encontrado');
       }
       
       $dto = new RepositoryFindModelDto(
@@ -40,6 +43,8 @@ class UserRepository implements UserRepositoryInterface
         message: 'Encontrado'
       );
       return $dto;
+    } catch (NotFoundUserException $e) {
+      throw new NotFoundUserException($e->getMessage());
     } catch (\Exception $e) {
       $dto = new RepositoryFindModelDto(
        false,
@@ -49,6 +54,9 @@ class UserRepository implements UserRepositoryInterface
     }
   } 
  
+   /**
+   * @inheritDoc
+   */
   public function save(User $user): RepositorySaveModelDto
   { 
     try {

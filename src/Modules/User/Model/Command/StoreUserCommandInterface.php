@@ -7,5 +7,11 @@ use Desafio\Modules\User\Model\User;
 
 interface StoreUserCommandInterface
 {
+  /**
+   * Grava Usuario
+   *
+   * @param FormStoreUserDto $dto
+   * @return User
+   */
   public function execute(FormStoreUserDto $dto): User;
 }

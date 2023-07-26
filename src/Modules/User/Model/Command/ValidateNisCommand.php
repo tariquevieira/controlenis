@@ -4,6 +4,9 @@ namespace Desafio\Modules\User\Model\Command;
 
 class ValidateNisCommand implements ValidateNisCommandInterface
 {
+  /**
+   * @inheritDoc
+   */
   public function execute(?string $nis = null): bool
   {
     $pattern= "/[0-9]{11}/"; 

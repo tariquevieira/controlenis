@@ -4,52 +4,62 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="css/styles.css">
   <title>Buscar Usuario</title>
 </head>
 <body>
   <div class="container">
-    <form>
+    <div>
+      <h1>Buscar Usuario</h1>
+    </div>
+    <div>
+      <form>
         <label for="name">Nis:</label>
         <input type="text" name="nis" id="nis">
         <input name="btn_cadastrar" id="btn_buscar" type="button" value="buscar" onclick="buscarUsuario()">
     </form>
+
+    </div>
+    
   </div>
   <script>
     async function buscarUsuario(codigo) {
-            const data = new FormData();
 
             const inputNis = document.getElementById('nis');
             let regra = /^[0-9]+$/;
-            let nis = inputName.value;
+            let nis = inputNis.value;
             let lengthNis = nis.trim().length;
             if ( lengthNis !== 11 ) {
-              alert('Atenção!! Digite nis valido');
+              alert('Atenção! Digite nis valido igual a onze digitos');
               return;
             }
 
-            if (nis.match(regra)) {
-                alert('Atenção!! Digite nis valido');
+            if (!nis.match(regra)) {
+                alert('Atenção!! Digite nis valido: somente numero');
                 return;
             }
  
-            data.append('name', inputName.value);
-            await enviar(data);
+            await enviar(nis);
       }
 
-      async function enviar(formData) {
-        let url = "http://localhost:8004/user/find/";
+      async function enviar(nis) {
+        let url = "http://localhost:8004/user/find?nis="+nis;
         try {
             const response = await fetch(url, {
-              method: "POST",
-              body: formData,
+              method: "GET",
             });
+            console.log(response.status);
 
-            if (response.status === '201') {
-              throw new Error("Erro: " + response.status);
+            if (response.status === 404) {
+              throw new Error("Usuario não encontrado");
+            }
+
+            if (response.status !== 200) {
+              throw new Error("Erro ao buscar usuario");
             }
            
             const resultado = await response.json();
-            let mensagem = ` Usuario cadastrado com sucesso: 
+            let mensagem = ` Usuario encontrado com sucesso: 
                       \n Nome: ${resultado.name} 
                       \n Nis: ${resultado.nis}`;
             

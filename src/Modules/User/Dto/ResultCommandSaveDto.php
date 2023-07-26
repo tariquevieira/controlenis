@@ -12,6 +12,10 @@ class ResultCommandSaveDto implements JsonSerializable
   private int    $id;
   private bool   $status = false;
 
+  /**
+   * @param User $user
+   * @param integer $id
+   */
   public function __construct(User $user, int $id)
   {
     $this->name = $user->getName();

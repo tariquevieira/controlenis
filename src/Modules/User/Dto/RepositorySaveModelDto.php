@@ -9,8 +9,6 @@ readonly class RepositorySaveModelDto
   public ?int   $id;
 
   /**
-   * Undocumented function
-   *
    * @param boolean $isInserted
    * @param string $message
    * @param integer|null $id

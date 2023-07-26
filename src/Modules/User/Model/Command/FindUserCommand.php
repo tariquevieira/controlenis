@@ -2,6 +2,7 @@
 
 namespace Desafio\Modules\User\Model\Command;
 
+use Desafio\Commons\Exceptions\NotFoundUserException;
 use Desafio\Data\Repository\UserRepositoryInterface;
 use Desafio\Modules\User\Dto\FormFindUserDto;
 use Desafio\Modules\User\Model\Factory\UserFactory;
@@ -14,6 +15,9 @@ class FindUserCommand implements FindUserCommandInterface
 
   }
   
+  /**
+   * @inheritDoc
+   */
   public function execute(FormFindUserDto $dto): User
   {
     try {
@@ -25,7 +29,10 @@ class FindUserCommand implements FindUserCommandInterface
       }
       $user = $userFactory->create($result->name, $result->nis, $result->id);
       return $user;
-      } catch (\Exception $e) {
+      return $dto;
+    } catch (NotFoundUserException $e) {
+      throw new NotFoundUserException($e->getMessage());
+    } catch (\Exception $e) {
         throw new \Exception($e->getMessage());
     }
   }

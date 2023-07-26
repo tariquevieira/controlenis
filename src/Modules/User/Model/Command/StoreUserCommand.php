@@ -14,6 +14,9 @@ class StoreUserCommand implements StoreUserCommandInterface
 
   }
 
+  /**
+   * @inheritDoc
+   */
   public function execute(FormStoreUserDto $dto): User
   {
     try {

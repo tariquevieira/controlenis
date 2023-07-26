@@ -2,6 +2,7 @@
 
 namespace Desafio\Commons\Http\Controller\User;
 
+use Desafio\Commons\Exceptions\NotFoundUserException;
 use Desafio\Modules\User\Dto\FormFindUserDto;
 use Desafio\Modules\User\Dto\FormStoreUserDto;
 use Desafio\Modules\User\Model\Command\FindUserCommandInterface;
@@ -37,8 +38,11 @@ class FindUserController implements RequestHandlerInterface
       $dto = new FormFindUserDto(htmlspecialchars($nis));
       $user = $this->findCommand->execute($dto);
 
-      http_response_code(201);
+      http_response_code(200);
       return new Response(headers: ['Content-Type' => 'application/json'], body: json_encode($user));
+    } catch (NotFoundUserException $e) {
+      http_response_code(404);
+      return new Response(body: $e->getMessage());
     } catch (\Exception $e) {
       http_response_code(500);
       return new Response(body: $e->getMessage());

@@ -10,6 +10,14 @@ readonly class RepositoryFindModelDto
   public ?string $name;
   public ?string $nis;
 
+  /**
+   *
+   * @param boolean $success
+   * @param string|null $message
+   * @param integer|null $id
+   * @param string|null $name
+   * @param string|null $nis
+   */
   public function __construct(
     bool $success,
     string $message = null,

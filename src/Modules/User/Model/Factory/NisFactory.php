@@ -6,6 +6,12 @@ use Desafio\Modules\User\Model\Nis;
 
 class NisFactory
 {
+  /**
+   * Cria NIS
+   *
+   * @param string|null $nis
+   * @return Nis
+   */
   public function create(string $nis = null): Nis
   {
     $idNis = empty($nis) ? $this->generateNis() : $nis;
