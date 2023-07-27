@@ -49,12 +49,12 @@ class FindUserCommandTest extends TestCase
       ->expects($this->once())
       ->method('find')
       ->willReturn($repositoryDto);
+    $
 
     $this->userFactory
       ->expects($this->exactly($data['qtd_userFactory']))
       ->method('create')
-      
-      ->with($data['name'], $data['nis'], $data['id'])
+      ->with($repositoryDto->name, $repositoryDto->nis, $repositoryDto->id)
       ->willReturn($this->user);
 
     $this->user
