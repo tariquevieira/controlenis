@@ -1,6 +1,3 @@
-# Sistema venda de produtos
-Esse é o banckend de sistema de produtos e categorias(tipos de produtos) em bancos SQL
-
 ## Overview do Código
 O codigo está segmentado em diferentes dirtórios para facilitar validação. Por exemplo:
 - Rotas em um unico arquivo na pasta de *routes*.
@@ -9,37 +6,26 @@ O codigo está segmentado em diferentes dirtórios para facilitar validação. P
 - Arquivos publicos e ponto de acesso ao sistema na pasta *public*
 - Todo código de regra de negócio e tratamento de requisião na pasta *scr* divididos também por modulos
 - Testes unitários na pasta de *tests*
+## Requisitos
+Para desenvolvimento do projeto foi usado:
+- Php 8.2: porta 8004
+- mysql 8.0: porta 8006
+- docker-compose para criação do ambiente de desenvolvimento.
 
 ## Execução
 Para executar o programaserá necessário rodar:
-- *php -S localhost:8080 -t public/*  
+- *php -S localhost:8080 -t public/*
+- *docker-compose up -d: backend*
+- *Direto no navegador para frontend*
   
 ### Configuração de banco de dados
 
 Toda configuração acesso ao banco de dados deverá ser feito pelo arquivo .env na raíz do projeto.
-- A variável de DB_SERVER deve informar qual modulo do banco de dados. Por exemplo: *pgsql* para postgres.
-- O backup do banco de dados esta na raíz do projeto com extensão .bkp
+- A variável de DB_SERVER deve informar qual modulo do banco de dados. Por exemplo: *mysql* para mysql.
 
 ### Variáveis de rotas
-As rotas de find, update e delete necessitam passar variavel code na url, como por exemplo:
-- http://localhost:8080/category/find?code=10
-- http://localhost:8000/product/update?code=266
-  
-### Métodos http
-Para desenvolvimento desse projeto foram utilizado apenas metodos nativos GET e POST:
-Rotas que usam o metodo **GET**:
-- product/
-- category/
-- product/find
-- category/find
-
-Rotas que usam o metodo **POST**:
-- /category/store 
-- /category/delete
-- /category/update
-- /product/store
-- /product/delete
-- /product/update
+As rotas de find necessitam passar variavel code na url, como por exemplo:
+- http://localhost:8004/user/find?nis=10
 
 ### Padrão de request e response
 As request de formulário deverão ser no padrão *multipart-form*. As respostas serão no formato json.
@@ -47,6 +33,7 @@ As request de formulário deverão ser no padrão *multipart-form*. As respostas
 #### Teste unitário
 Os testes poderão ser executados com:
 - ./vendor/bin/phpunit [path] --colors
+-  docker-compose run phpunit /application/[path]
 
 ### Arquivo de configuração
 Arquivo de configuração .env.example contém todas variáveis de ambientes que são serão usadas para mensagens de sistema, configuração de banco de dados e quaisquer outras configurações em que projeto vier necessitar:
@@ -55,7 +42,14 @@ Arquivo de configuração .env.example contém todas variáveis de ambientes que
 - DB_DATABASE: nome do banco de dados que será usado.
 - DB_USER: nome do usuário.
 - DB_PASSWORD: senha do ususário.
-- MSG_PRODUCT_NOTFOUND="Produto não encontrado": mensagem a ser exibida caso produto não seja encontrado.
+- DB_PORT: porta do banco de dados
 
+## Criat a tabela users
+CREATE TABLE `users` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) NOT NULL,
+  `nis` varchar(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 #### Desenvolvido por:
 - Tarique Vieira Ramos
