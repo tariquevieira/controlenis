@@ -11,7 +11,7 @@ class ValidateNisCommand implements ValidateNisCommandInterface
   {
     $pattern= "/[0-9]{11}/"; 
 
-    if(preg_match($pattern, $nis) == 1){
+    if(preg_match($pattern, $nis) == 1 && strlen($nis) === 11) {
       return true;
     }
     
