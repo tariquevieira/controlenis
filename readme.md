@@ -4,8 +4,10 @@ O codigo está segmentado em diferentes dirtórios para facilitar validação. P
 - Configuração de banco de dados na pasta *database*
 - Arquivos de configuração e inicialização de sistema estão pasta *config*
 - Arquivos publicos e ponto de acesso ao sistema na pasta *public*
-- Todo código de regra de negócio e tratamento de requisião na pasta *scr* divididos também por modulos
+- Os codigos frontend estão em *public/pages*.
+- Todo código de regra de negócio e tratamento de requisião na pasta *scr*.
 - Testes unitários na pasta de *tests*
+- Aplicação responderá tanto pelo postman ou insomnia quanto ao frontend
 ## Requisitos
 Para desenvolvimento do projeto foi usado:
 - Php 8.2: porta 8004
